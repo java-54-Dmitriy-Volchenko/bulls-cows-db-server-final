@@ -10,32 +10,42 @@ import org.hibernate.jpa.HibernatePersistenceProvider;
 import jakarta.persistence.*;
 public class InitialAppl {
 
+	private static final int HYPHENS_BEFORE_TITLE = 20;
+	private static final int HYPHENS_AFTER_TITLE = 20;
 	public static void main(String[] args) {
 		HashMap<String, Object> map = new HashMap<>();
 		map.put("hibernate.hbm2ddl.auto", "update");//using existing table
-		map.put("hibernate.show_sql", true);
-		map.put("hibernate.format_sql", true);
+		
 		EntityManagerFactory emFactory = new HibernatePersistenceProvider()
 				.createContainerEntityManagerFactory(new BullsCowsPersistenceUnitInfo(), map);
 		EntityManager em = emFactory.createEntityManager();
 		JpqlQueriesRepository repository = new JpqlQueriesRepository(em);
-//		List<Game> games = repository.getGamesFinished(false);
-//		displayResult(games);
-//		List<DateTimeSequence> list =
-//				repository.getDateTimeSequence(LocalTime.of(12, 0));
-//		displayResult(list);
-//		List<Integer> list =
-//				repository.getBullsInMovesGamersBornAfter(LocalDate.ofYearDay(2000, 1));
-//		displayResult(list);
-		List<MinMaxAmount> list = 
-				repository.getDistributionGamesMoves(6);
-		displayResult(list);
-
+		displayTitle("1. display all data about games, average age\r\n"
+				+ "of gamers in which greater than 60 (consider constraction\r\n"
+				+ "where id in (select with group by)");
+		List<Game> result1 = repository.getGamesGamersAvgAgeGreaterThan(70);
+		displayResult(result1);
+		displayTitle("2. display game_id and number of moves made by winner of games with number of moves made by\r\n"
+				+ "winner less than 5");
+		List<GameMoves> result2 = repository.getGamesWinnerMovesLessThan(5);
+		displayResult(result2);
+		displayTitle("3. display gamer names who made in one game number of moves less than 4");
+		List<String> result3 = repository.getGamersGameMovesLessThan(4);
+		displayResult(result3);
+		displayTitle(" display game_id and average number of moves made by each gamer. Example in game 100000\r\n"
+				+ "there are three gamers (gamer1, gamer2, gamer3)");
+		List<GameAvgMoves> result4 = repository.getGamesAvgMoves();
+		displayResult(result4);
 	}
 
 	private static <T >void displayResult(List<T> list) {
 		list.forEach(System.out::println);
+		System.out.println(list.size());
 		
+	}
+	private static void displayTitle(String title) {
+		System.out.printf("%s%s%s\n", "-".repeat(HYPHENS_BEFORE_TITLE),title,
+				"-".repeat(HYPHENS_AFTER_TITLE));
 	}
 
 }
