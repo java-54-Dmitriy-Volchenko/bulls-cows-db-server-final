@@ -46,9 +46,9 @@ public class JpqlQueriesRepository {
 	}
 	public List<Game> getGamesGamersAvgAgeGreaterThan(double avgAge) {
 		TypedQuery<Game> query = em.createQuery(
-		        "select game from Game game where id in (" +
-		        "select gameGamer.game.id from GameGamer gameGamer  " +
-		        "group by gameGamer.game.id " +
+		        "select g from Game g where id in (" +
+		        "select game.id from GameGamer   " +
+		        "group by game.id " +
 		        "having avg(extract(year from current_date) - extract(year from gamer.birthdate)) > ?1)",
 		        Game.class
 		    );

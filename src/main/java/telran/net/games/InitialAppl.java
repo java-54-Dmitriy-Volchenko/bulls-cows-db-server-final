@@ -23,7 +23,7 @@ public class InitialAppl {
 		displayTitle("1. display all data about games, average age\r\n"
 				+ "of gamers in which greater than 60 (consider constraction\r\n"
 				+ "where id in (select with group by)");
-		List<Game> result1 = repository.getGamesGamersAvgAgeGreaterThan(70);
+		List<Game> result1 = repository.getGamesGamersAvgAgeGreaterThan(60);
 		displayResult(result1);
 		displayTitle("2. display game_id and number of moves made by winner of games with number of moves made by\r\n"
 				+ "winner less than 5");
