@@ -12,7 +12,10 @@ public MoveData(JSONObject jsonObject) {
 			   jsonObject.getInt(BULLS_FILED), jsonObject.getInt(COWS_FIELD));
    }
 public String toString() {
-	//TODO - creating JSON string from object
+	JSONObject jsonObj = new JSONObject();
+	jsonObj.put(BULLS_FILED, bulls);
+	jsonObj.put(COWS_FIELD, cows);
+	jsonObj.put(SEQUENCE_FIELD, sequence);
 	return null;
 	
 }
