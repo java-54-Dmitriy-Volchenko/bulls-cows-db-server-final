@@ -16,7 +16,7 @@ public String toString() {
 	jsonObj.put(BULLS_FILED, bulls);
 	jsonObj.put(COWS_FIELD, cows);
 	jsonObj.put(SEQUENCE_FIELD, sequence);
-	return null;
+	return jsonObj.toString();
 	
 }
 }
